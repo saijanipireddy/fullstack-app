@@ -1,4 +1,6 @@
 import express from 'express'
+const foodRouter = express.Router();
+
 
 import { addFood,foodList ,removeFood} from '../controllers/foodController.js'
 import fs from 'fs'
