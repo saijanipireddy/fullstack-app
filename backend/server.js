@@ -8,7 +8,13 @@ import 'dotenv/config'
 import cartRouter from './routes/cartRoute.js'
 import bcryptjs from 'bcryptjs';
 import path from 'path'; 
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 //app config 
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 
 const app = express()
 const port = process.env.PORT || 4000
@@ -17,7 +23,7 @@ const port = process.env.PORT || 4000
 
 app.use(express.json())
 app.use(cors())
-app.use('/images', express.static(path.join(__dirname, 'uploads')));
+app.use('/images', express.static(join(__dirname, 'uploads')));
 
 // DB Connection 
 connectDB();
