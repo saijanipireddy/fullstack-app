@@ -97,7 +97,7 @@ const StoreContextProvider = (props) => {
 
     const fetchFoodList = async () => {
         try {
-            const response = await axios.get(url + "/api/food/list");
+            const response = await axios.get("https://fullstack-app-4a4f.onrender.com/api/food/list");
             setFoodList(response.data.data || []);
             console.log("Loaded food list:", response.data.data); // Debugging
         } catch (error) {
