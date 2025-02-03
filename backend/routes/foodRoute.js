@@ -1,22 +1,33 @@
 import express from 'express'
 
 import { addFood,foodList ,removeFood} from '../controllers/foodController.js'
-import multer from 'multer'
 import fs from 'fs'
 import path from 'path'
+import multer from 'multer';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 
+// Simulating __dirname in ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
+// Ensure "uploads" directory exists
 
-const foodRouter = express.Router();
+const uploadDir = join(__dirname, '..', 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
 
 const storage = multer.diskStorage({
-    destination: "uploads",
-    filename: (req,file,cb) => {
-        return cb(null, `${Date.now()} ${file.originalname}`)
-    }
-})
+  destination: (req, file, cb) => {
+    cb(null, uploadDir); // Store in "uploads" folder
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname.replace(/\s+/g, '-')}`);
+  },
+});
 
-const upload = multer({storage: storage})
+const upload = multer({ storage: storage });
 
 
 
