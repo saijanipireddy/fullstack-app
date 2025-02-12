@@ -1,13 +1,15 @@
 import { createContext, useEffect, useState } from "react";
 import axios from 'axios';
+import {food_list} from '../assets/assets'
+import { assets } from "../assets/assets";
 
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({});
     const [token, setToken] = useState("");
-    const url = "https://fullstack-app-4a4f.onrender.com/";
-    const [food_list, setFoodList] = useState([]);
+  
+
 
     // Load cart items from localStorage when the component mounts
     useEffect(() => {
@@ -46,7 +48,6 @@ const StoreContextProvider = (props) => {
 
     useEffect(() => {
         async function loadData() {
-            await fetchFoodList();
             const storedToken = localStorage.getItem("token");
             if (storedToken) {
                 setToken(storedToken);
@@ -95,15 +96,7 @@ const StoreContextProvider = (props) => {
         return totalAmount;
     };
 
-    const fetchFoodList = async () => {
-        try {
-            const response = await axios.get("https://fullstack-app-4a4f.onrender.com/api/food/list");
-            setFoodList(response.data.data || []);
-            console.log("Loaded food list:", response.data.data); // Debugging
-        } catch (error) {
-            console.error("Error loading food list:", error);
-        }
-    };
+  
 
     const contextValue = {
         food_list,
@@ -112,7 +105,6 @@ const StoreContextProvider = (props) => {
         addToCart,
         removeFromCart,
         getTotalCartAmount,
-        url,
         token,
         setToken
     };
